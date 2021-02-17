@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import 'react-native-gesture-handler'
+import React, { Component } from 'react'
+import { View } from 'react-native'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducers from './redux/reducers'
+import middleware from './redux/middleware'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+import CustomStatusBar from './components/helpers/CustomStatusBar'
+import Main from './components/Main'
+
+import { blue } from './utils/colors'
+import { common } from './styles'
+
+const store = createStore(reducers, middleware)
+
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={ store }>
+        <View style={ common.container }>
+          <CustomStatusBar backgroundColor={ blue } barStyle='light-content' />
+          <Main />
+        </View>
+      </Provider>
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
