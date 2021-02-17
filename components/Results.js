@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
-import { common, buttons } from '../styles'
+import { buttons } from '../styles'
 
 class Results extends Component {
   componentDidMount () {
