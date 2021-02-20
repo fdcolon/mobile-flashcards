@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
 import { handleSetInitialData } from '../redux/actions'
-import { buttons } from '../styles'
+import { common, buttons } from '../styles'
 
 class Welcome extends Component {
   initializeData (startEmpty = false) {
@@ -14,9 +14,11 @@ class Welcome extends Component {
   render() {
     return (
       <View style={ welcomeStyles.container }>
-        <Text style={ welcomeStyles.title }>
-          Welcome! We noticed this is the first time you use this app. Please, select one option to continue.
-        </Text>
+        <View style={ common.center }>
+          <Text style={ welcomeStyles.title }>
+            Welcome! We noticed this is the first time you use this app. Please, select one option to continue.
+          </Text>
+        </View>
         <View style={ buttons.buttonBlockAtBottom }>
           <TouchableOpacity
             style={ [buttons.base, buttons.secondary, buttons.oneLine, buttons.bottomButton] }
@@ -47,7 +49,6 @@ export const welcomeStyles = StyleSheet.create({
     justifyContent: 'center'
   },
   title: {
-    flex: 1,
     fontSize: 18
   },
   row: {

@@ -23,7 +23,7 @@ class AddDeck extends Component {
         showModal: false,
         title: ''
       })
-      this.goBack ()
+      this.goBack()
     }
   }
 
@@ -63,7 +63,6 @@ class AddDeck extends Component {
             })
           } }
         />
-
         <View style={ styles.inputsBlock }>
           <Text style={ common.label } >
             What is the title of your new deck?

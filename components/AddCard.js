@@ -34,7 +34,7 @@ class AddCard extends Component {
 
     this.props.navigation.setOptions({
       headerTitleAlign: 'center',
-      headerBackTitle: title,
+      headerBackTitle: title.length > 10 ? `${title.slice(0, 10)}...` : title,
       headerBackTitleVisible: true
     })
   }
@@ -51,7 +51,7 @@ class AddCard extends Component {
       this.setState({
         showModal: false
       })
-      this.goBack ()
+      this.goBack()
     }
   }
 
@@ -96,7 +96,6 @@ class AddCard extends Component {
             })
           } }
         />
-
         <View style={ cardStyles.inputsBlock }>
           <TextInput
             style={ [inputs.base, cardStyles.input] }
@@ -167,13 +166,13 @@ const cardStyles = StyleSheet.create({
   }
 })
 
-const mapStateToProps = ({ loading, deck }, { route }) => {
+const mapStateToProps = ({ loading, decks }, { route }) => {
   const { id, title } = route.params
 
   return {
     id,
     title,
-    deck,
+    deck: decks[id],
     loading
   }
 }

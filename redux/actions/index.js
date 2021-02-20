@@ -7,7 +7,8 @@ import {
   updateDeckTitle,
   removeDeck,
   addCardToDeck,
-  removeCardFromDeck
+  saveAnswerToQuiz,
+  resetQuiz
 } from '../../utils/api'
 
 export const START_LOADING = 'START_LOADING'
@@ -18,7 +19,8 @@ export const ADD_DECK = 'ADD_DECK'
 export const UPDATE_DECK = 'UPDATE_DECK'
 export const DELETE_DECK = 'DELETE_DECK'
 export const ADD_CARD = 'ADD_CARD'
-export const DELETE_CARD = 'DELETE_CARD'
+export const SAVE_QUIZ_ANSWER = 'SAVE_QUIZ_ANSWER'
+export const RESET_QUIZ = 'RESET_QUIZ'
 
 const startLoading = () => {
   return {
@@ -41,11 +43,11 @@ const getDecks = decks => {
   }
 }
 
-export const handleSetInitialData = () => {
+export const handleSetInitialData = startEmpty => {
   return dispatch => {
     dispatch(startLoading())
 
-    return (setInitialData())
+    return (setInitialData(startEmpty))
       .then(decks => {
         dispatch(getDecks(decks))
         dispatch(stopLoading())
@@ -77,28 +79,26 @@ export const handleGetDecks = () => {
   }
 }
 
-const getDeck = (deck, decks) => {
+const getDeck = (deck) => {
   return {
     type: FETCH_DECK,
-    deck,
-    decks
+    deck
   }
 }
 
 export const handleGetDeck = id => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(startLoading())
-    const { decks } = getState()
 
     return (retrieveDeck(id))
       .then(deck => {
-        dispatch(getDeck(deck, decks))
+        dispatch(getDeck(deck))
         dispatch(stopLoading())
       })
   }
 }
 
-const postDeck = (decks) => {
+const postDeck = decks => {
   return {
     type: ADD_DECK,
     decks
@@ -117,11 +117,10 @@ export const handlePostDeck = (title) => {
   }
 }
 
-const putDeck = ({ id, title }) => {
+const putDeck = decks => {
   return {
     type: UPDATE_DECK,
-    id,
-    title
+    decks
   }
 }
 
@@ -130,8 +129,8 @@ export const handlePutDeck = (id, title) => {
     dispatch(startLoading())
 
     return (updateDeckTitle(id, title))
-      .then(() => {
-        dispatch(putDeck(id, title))
+      .then(decks => {
+        dispatch(putDeck(decks))
         dispatch(stopLoading())
       })
   }
@@ -149,39 +148,69 @@ export const handleDeleteDeck = id => {
     dispatch(startLoading())
 
     return (removeDeck(id))
-      .then((decks) => {
+      .then(decks => {
         dispatch(deleteDeck(decks))
         dispatch(stopLoading())
       })
   }
 }
 
-const postCard = (decks, deckId, card) => {
+const postCard = (decks, deck) => {
   return {
     type: ADD_CARD,
     decks,
-    deckId,
-    card
+    deck
   }
 }
 
 export const handlePostCard = (title, card) => {
-  return (dispatch, getState) => {
+  return dispatch => {
     dispatch(startLoading())
-    const { decks } = getState()
 
     return (addCardToDeck(title, card))
-      .then((deckId) => {
-        dispatch(postCard(decks, deckId, card))
+      .then(({ decks, deck }) => {
+        dispatch(postCard(decks, deck))
         dispatch(stopLoading())
       })
   }
 }
 
-export const deleteCard = ({ deckId, card }) => {
+const postAnswer = (decks, deck) => {
   return {
-    type: DELETE_CARD,
-    deckId,
-    card
+    type: SAVE_QUIZ_ANSWER,
+    decks,
+    deck
+  }
+}
+
+export const handlePostAnswer = (deckId, questionNumber, answer) => {
+  return dispatch => {
+    dispatch(startLoading())
+
+    return (saveAnswerToQuiz(deckId, questionNumber, answer))
+      .then(({ decks, deck }) => {
+        dispatch(postAnswer(decks, deck))
+        dispatch(stopLoading())
+      })
+  }
+}
+
+const deleteQuiz = (decks, deck) => {
+  return {
+    type: RESET_QUIZ,
+    decks,
+    deck
+  }
+}
+
+export const handleResetQuiz = deckId => {
+  return dispatch => {
+    dispatch(startLoading())
+
+    return (resetQuiz(deckId))
+      .then(({ decks, deck }) => {
+        dispatch(deleteQuiz(decks, deck))
+        dispatch(stopLoading())
+      })
   }
 }

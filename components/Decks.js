@@ -6,7 +6,7 @@ import { isEmpty as _isEmpty } from 'lodash'
 import DeckCard from './DeckCard'
 
 import { formatDeckResults } from '../utils/helpers'
-import { white, lightGray, blue } from '../utils/colors'
+import { white, lightGray, blue, black } from '../utils/colors'
 import { common } from '../styles'
 
 class Decks extends Component {
@@ -34,8 +34,15 @@ class Decks extends Component {
     }
 
     return (
-      <ScrollView>
-        { decks.map(deck => (
+      <ScrollView style={ _isEmpty(decks) ? deckStyles.container : '' }>
+        { _isEmpty(decks) && (
+          <View style={ common.center }>
+            <Text style={ common.label }>
+              There are no decks registered. Please add one! ✌️😎
+            </Text>
+          </View>
+        ) }
+        { !_isEmpty(decks) && decks.map(deck => (
           <View key={ deck.id } style={ deckStyles.card }>
             <TouchableOpacity onPress={ () => this.props.navigation.navigate(
               'Deck Details',
@@ -54,6 +61,10 @@ class Decks extends Component {
 }
 
 export const deckStyles = StyleSheet.create({
+  container:{
+    flex: 1,
+    padding: 16
+  },
   card: {
     backgroundColor: white,
     borderRadius: 8,
@@ -62,13 +73,14 @@ export const deckStyles = StyleSheet.create({
     marginRight: 10,
     marginTop: 7,
     justifyContent: 'center',
-    shadowRadius: 3,
+    shadowRadius: 4,
     shadowOpacity: 0.8,
-    shadowColor: 'rgba(0, 0, 0, 0.24)',
+    shadowColor: black,
     shadowOffset: {
       width: 0,
-      height: 3
-    }
+      height: 2
+    },
+    elevation: 5
   },
   title: {
     fontSize: 28

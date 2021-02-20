@@ -2,15 +2,19 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
+import WaitingModal from './helpers/WaitingModal'
+
+import { handlePostAnswer } from '../redux/actions'
+
 import { buttons, common } from '../styles'
 import { black, red, white } from '../utils/colors'
 
 class Quiz extends Component {
   state = {
+    showModal: false,
     showQuestion: true
   }
 
-  value = 0
   animatedValue = new Animated.Value(0)
   frontInterpolate = this.animatedValue.interpolate({
     inputRange: [0, 180],
@@ -26,43 +30,67 @@ class Quiz extends Component {
 
     this.props.navigation.setOptions({
       headerTitleAlign: 'center',
-      headerBackTitle: title,
+      headerBackTitle: title.length > 12 ? `${title.slice(0, 12)}...` : title,
       headerBackTitleVisible: true
     })
+  }
 
-    this.animatedValue.addListener(({ value }) => {
-      this.value = value
-    })
+  componentDidUpdate () {
+    const { loading } = this.props
+    const { showModal } = this.state
+
+    if (!loading && showModal) {
+      this.setState({
+        showModal: false,
+        showQuestion: true
+      })
+      this.goToNextQuiz()
+    }
   }
 
   flipCard () {
     const { showQuestion } = this.state
 
-    this.setState({
-      showQuestion: !showQuestion
-    })
-
-    if (this.value >= 90) {
-      Animated.spring(this.animatedValue, {
-        toValue: 0,
-        friction: 8,
-        tension: 10,
-        useNativeDriver: true
-      }).start()
-    } else {
+    if (showQuestion) {
       Animated.spring(this.animatedValue, {
         toValue: 180,
         friction: 8,
         tension: 10,
         useNativeDriver: true
       }).start()
+    } else {
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10,
+        useNativeDriver: true
+      }).start()
     }
+
+    this.setState({
+      showQuestion: !showQuestion
+    })
+  }
+
+  onSetAnswer (answer) {
+    const { id, quizNumber, handlePostAnswer } = this.props
+
+    handlePostAnswer(id, quizNumber, answer)
+
+    this.setState({
+      showModal: true
+    })
   }
 
   goToNextQuiz () {
     const { id, title, nextQuizIndex, totalQuizes, navigation } = this.props
 
-    if (nextQuizIndex) {
+    if (nextQuizIndex) {      
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        useNativeDriver: true
+      }).start()
+
       navigation.navigate(
         'Quiz',
         { id, title, quizIndex: nextQuizIndex, totalQuizes }
@@ -70,14 +98,14 @@ class Quiz extends Component {
     } else {
       navigation.navigate(
         'Results',
-        { id, title, totalQuizes }
+        { id, title }
       )
     }
   }
 
   render() {
     const { item, quizNumber, totalQuizes } = this.props
-    const { showQuestion } = this.state
+    const { showQuestion, showModal } = this.state
     const frontAnimatedStyle = {
       transform: [{ rotateY: this.frontInterpolate }]
     }
@@ -85,7 +113,7 @@ class Quiz extends Component {
       transform: [{ rotateY: this.backInterpolate }]
     }
   
-    if (!item) {
+    if (!totalQuizes) {
       return (
         <View style={ [styles.container, common.center] }>
           <Text style={ [common.label, { textAlign: 'center' }] }>
@@ -97,6 +125,15 @@ class Quiz extends Component {
   
     return (
       <View style={ styles.container }>
+        <WaitingModal
+          visible={ showModal }
+          message="Saving answer. Please wait..."
+          onRequestClose={ () => {
+            this.setState({
+              showModal: false
+            })
+          } }
+        />
         <Text style={ styles.counter }>Quiz { quizNumber } / { totalQuizes }</Text>
         <View style={ styles.questionBlock }>
           <Animated.View style={ [styles.flipCard, frontAnimatedStyle] }>
@@ -120,14 +157,22 @@ class Quiz extends Component {
         </TouchableOpacity>
         <View style={ styles.actionsBlock }>
           <TouchableOpacity
-            style={ [buttons.base, buttons.correct, styles.actionButton] }
-            onPress={ () => this.goToNextQuiz() }
+            style={ [
+              buttons.base,
+              buttons.correct,
+              styles.actionButton
+            ] }
+            onPress={ () => this.onSetAnswer(true) }
           >
             <Text style={ [buttons.label, buttons.labelLight] }>Correct</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={ [buttons.base, buttons.incorrect, styles.actionButton] }
-            onPress={ () => this.goToNextQuiz() }
+            style={ [
+              buttons.base,
+              buttons.incorrect,
+              styles.actionButton
+            ] }
+            onPress={ () => this.onSetAnswer(false) }
           >
             <Text style={ [buttons.label, buttons.labelLight] }>Incorrect</Text>
           </TouchableOpacity>
@@ -157,6 +202,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: black,
     backgroundColor: white,
+    width: '100%',
     minHeight: 200,
     alignItems: 'center',
     justifyContent: 'center',
@@ -188,7 +234,7 @@ const styles = StyleSheet.create({
   actionButton: {
     marginBottom: 16,
     padding: 24,
-    width: 300,
+    width: '70%',
     alignItems: 'center'
   }
 })
@@ -196,16 +242,13 @@ const styles = StyleSheet.create({
 const mapStateToProps = ({ loading, decks }, { route }) => {
   const { id, title, quizIndex, totalQuizes } = route?.params || {}
   const quizNumber = quizIndex + 1
-  const item = totalQuizes > 0
-    ? decks[id].questions[quizIndex]
-    : null
 
   return {
     id,
     title,
     quizNumber,
     totalQuizes,
-    item,
+    item: decks[id].questions[quizIndex] || null,
     nextQuizIndex: quizNumber < totalQuizes
       ? quizIndex + 1
       : null,
@@ -213,6 +256,11 @@ const mapStateToProps = ({ loading, decks }, { route }) => {
   }
 }
 
+const mapDispatchToProps = {
+  handlePostAnswer
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Quiz)

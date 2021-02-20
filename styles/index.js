@@ -64,7 +64,7 @@ export const buttons = StyleSheet.create({
     color: black
   },
   buttonBlockAtBottom: {
-    flex: 1,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'flex-end',

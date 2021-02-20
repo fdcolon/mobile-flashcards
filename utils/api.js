@@ -31,11 +31,9 @@ export const retrieveDecks = async () => {
 
 export const retrieveDeck = async id => {
   const data = JSON.parse(await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY))
-  const decks = data?.flashcards || null
+  const deck = data?.flashcards[id] || null
 
-  return decks
-    ? decks[id]
-    : undefined
+  return deck
 }
 
 export const saveDeckTitle = async title => {
@@ -73,6 +71,8 @@ export const updateDeckTitle = async (id, title) => {
   }
 
   await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newData))
+
+  return newData.flashcards
 }
 
 export const removeDeck = async id => {
@@ -111,28 +111,72 @@ export const addCardToDeck = async (title, card) => {
       }
     }
   }
-  console.log(newData)
 
   await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newData))
 
-  return deckId
+  return {
+    decks: newData.flashcards,
+    deck: newData.flashcards[deckId]
+  }
 }
 
-export const removeCardFromDeck = async (deckId, card) => {
+export const saveAnswerToQuiz = async (deckId, questionNumber, answer) => {
   const data = JSON.parse(await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY))
   const decks = data.flashcards
+  const deck = decks[deckId]
+  const questionId = questionNumber - 1
+  const totalQuestions = deck.questions.length
+
+  deck.questions[questionId].quizAnswer = answer
 
   const newData = {
     flashcards: {
       ...decks,
       [deckId]: {
-        ...decks[deckId],
-        questions: decks[deckId].questions.filter(deckCard => deckCard.question !== card.question)
+        ...deck,
+        questions: deck.questions,
+        answeredOn: questionNumber === totalQuestions
+          ? new Date()
+          : null
       }
     }
   }
 
   await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newData))
 
-  return newData.flashcards
+  return {
+    decks: newData.flashcards,
+    deck: newData.flashcards[deckId]
+  }
+}
+
+export const resetQuiz = async (deckId) => {
+  const data = JSON.parse(await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY))
+  const decks = data.flashcards
+  const deck = decks[deckId]
+
+  const updatedQuestions = deck.questions.map(item => {
+    return {
+      ...item,
+      quizAnswer: null
+    }
+  })
+
+  const newData = {
+    flashcards: {
+      ...decks,
+      [deckId]: {
+        ...deck,
+        questions: updatedQuestions,
+        answeredOn: null
+      }
+    }
+  }
+
+  await AsyncStorage.mergeItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(newData))
+
+  return {
+    decks: newData.flashcards,
+    deck: newData.flashcards[deckId]
+  }
 }
