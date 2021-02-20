@@ -34,7 +34,7 @@ To run the **Mobile Flashcards** app, just type the following into your terminal
 
 This will start a browser with expo running. Click on the `Tunnel` button on the **Connection** section and hit the **Production Mode** switch. Then, just scan the QR code from your device to see the app running.
 
-<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/expo-page.png" width="300">
+<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/expo-page.png" width="600">
 
 ### Welcome
 
