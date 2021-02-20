@@ -24,7 +24,7 @@ class Results extends Component {
         return styles.excellent
       case (value >= 80):
         return styles.awesome
-      case (value > 50):
+      case (value >= 60):
         return styles.wellDone
       default:
         return styles.tooBad
