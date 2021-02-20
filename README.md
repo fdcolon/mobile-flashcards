@@ -233,7 +233,7 @@ Finally, once the deck is deleted, you will be redirected to the `Decks` screen 
 ### Notifications
 This mobile app is configured to send a notification to the user daily at 9:00 am if the user hasn't solve any quiz today.
 
-<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/notifications-01.png" width="300">
+<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/notification-01.png" width="300">
 
 **Figure 30** - Notifications
 
@@ -242,7 +242,8 @@ However, if the user already solve a quiz before 9:00 am, then the notification 
 
 ## Notes
 
-- Deleting Decks was not required in the Rub.
+- Deleting Decks was not required in the Rubric.
+- Loading modals were not required in the Rubric.
 - Added api method `resetData` for testing purposes such as verify the `Welcome` screen was working as expected.
 - Added api method `updateDeckTitle` because it was planned to add that behavior but I wasn't able to find a place where to put an option to do that action into the `Deck Details` screen. However, my plan is to add that behavior later.
 
