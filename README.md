@@ -36,7 +36,7 @@ To run the **Mobile Flashcards** app, just type the following into your terminal
 
 Once the app is running, the first view you will see is a **Welcome** screen where you will be requested to define how would you like to start the mobile app: With empty data or with preset data.
 
-![](https://github.com/fdcolon/mobile-flashcards/blob/main/images/welcome.png =250x)  
+![](https://github.com/fdcolon/mobile-flashcards/blob/main/images/welcome.png=250x)  
 **Figure 1** - Welcome Page
 
 ### Main Screen
