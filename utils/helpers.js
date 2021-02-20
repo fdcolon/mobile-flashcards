@@ -129,3 +129,33 @@ export const setTomorrowNotification = async () => {
     setupNotification(trigger, newData)
   }
 }
+
+/**
+ Possible types for "trigger" property:
+ 
+ TimeIntervalTriggerInput {
+    channelId?: string;
+    repeats?: boolean;
+    seconds: number;
+  }
+
+  DailyTriggerInput {
+    channelId?: string;
+    hour: number;
+    minute: number;
+    repeats: true;
+  }
+
+  WeeklyTriggerInput {
+    channelId?: string;
+    weekday: number;
+    hour: number;
+    minute: number;
+    repeats: true;
+  }
+
+  DateTriggerInput = Date | number | {
+    channelId?: string;
+    date: Date | number;
+  }
+ */

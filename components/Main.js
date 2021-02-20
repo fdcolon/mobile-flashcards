@@ -31,8 +31,7 @@ class Main extends Component {
   }
 
   componentDidMount () {
-    const { decks, handleGetDecks, handleResetData } = this.props
-    // handleResetData()
+    const { decks, handleGetDecks } = this.props
 
     if (decks === undefined) {
       handleGetDecks()
