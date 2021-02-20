@@ -8,6 +8,7 @@ import { handlePostAnswer } from '../redux/actions'
 
 import { buttons, common } from '../styles'
 import { black, red, white } from '../utils/colors'
+import { setTomorrowNotification } from '../utils/helpers'
 
 class Quiz extends Component {
   state = {
@@ -96,6 +97,8 @@ class Quiz extends Component {
         { id, title, quizIndex: nextQuizIndex, totalQuizes }
       )
     } else {
+      setTomorrowNotification()
+
       navigation.navigate(
         'Results',
         { id, title }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Platform, View, StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { isEmpty as _isEmpty } from 'lodash'
+import moment from 'moment'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
@@ -20,7 +21,9 @@ import Quiz from './Quiz'
 import Results from './Results'
 
 import { handleGetDecks, handleResetData } from '../redux/actions'
+
 import { blue, white } from '../utils/colors'
+import { setTomorrowNotification } from '../utils/helpers'
 
 class Main extends Component {
   state = {
@@ -41,12 +44,17 @@ class Main extends Component {
   }
 
   componentDidUpdate () {
+    const { isQuizDone } = this.props
     const { isLoading } = this.state
 
     if (isLoading) {
       this.setState({
         isLoading: false
       })
+    }
+
+    if (isQuizDone) {
+      setTomorrowNotification()
     }
   }
 
@@ -181,9 +189,20 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = ({ decks }) => {
+  const today = moment().format('YYYY-MM-DD')
+  const decksArray = decks
+    ? Object.keys(decks).map(key => {
+        return {
+          id: key,
+          answeredOn: decks[key].answeredOn || null
+        }
+      })
+    : []
+
   return {
     decks,
-    isFirstTime: !decks
+    isFirstTime: !decks,
+    isQuizDone: !!decksArray.find(deck => deck.answeredOn === today)
   }
 }
 

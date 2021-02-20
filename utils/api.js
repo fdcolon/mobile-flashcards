@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native'
 import { camelCase as _camelCase } from 'lodash'
+import moment from 'moment'
 
 import { FLASHCARDS_STORAGE_KEY, initialData } from './_DATA'
 
@@ -136,7 +137,7 @@ export const saveAnswerToQuiz = async (deckId, questionNumber, answer) => {
         ...deck,
         questions: deck.questions,
         answeredOn: questionNumber === totalQuestions
-          ? new Date()
+          ? moment().format('YYYY-MM-DD')
           : null
       }
     }

@@ -9,12 +9,17 @@ import middleware from './redux/middleware'
 import CustomStatusBar from './components/helpers/CustomStatusBar'
 import Main from './components/Main'
 
+import { setDailyNotification } from './utils/helpers'
 import { blue } from './utils/colors'
 import { common } from './styles'
 
 const store = createStore(reducers, middleware)
 
 export default class App extends Component {
+  componentDidMount () {
+    setDailyNotification()
+  }
+
   render() {
     return (
       <Provider store={ store }>

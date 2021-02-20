@@ -1,4 +1,17 @@
+import { AsyncStorage, Platform } from 'react-native'
+import * as Notifications from 'expo-notifications'
+
 import { isEmpty as _isEmpty } from 'lodash'
+
+const NOTIFICATION_KEY = 'MobileFlashcards:notifications'
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+})
 
 export const formatDeckResults = decks => {
   return _isEmpty(decks)
@@ -33,5 +46,86 @@ export const formatQuizResults = ({ questions }) => {
   return {
     totalScore,
     percentage: Math.round(totalScore * 100 / questions.length)
+  }
+}
+
+export const clearLocalNotification = async () => {
+  await AsyncStorage.removeItem(NOTIFICATION_KEY)
+  await Notifications.cancelAllScheduledNotificationsAsync()
+}
+
+const setupNotification = async (trigger, newData) => {
+  await Notifications.cancelAllScheduledNotificationsAsync()
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF0000'
+    })
+  }
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: 'Mobile Flashcards',
+      body: `☕️ Good morning! Let's solve a quiz today!`,
+      sound: 'default',
+      priority: 'high'
+    },
+    trigger
+  })
+
+  await AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(newData))
+}
+
+export const setDailyNotification = async () => {
+  const data = JSON.parse(await AsyncStorage.getItem(NOTIFICATION_KEY))
+  const today = new Date()
+  let trigger
+  let newData
+
+  if (data && data.repeatMode === 'tomorrow' && today < new Date(data.repeatAt)) {
+    trigger = {
+      date: new Date(data.repeatAt)
+    }
+    newData = data
+  } else {
+    trigger = {
+      hour: 9,
+      minute: 0,
+      repeats: true
+    }
+  
+    newData = {
+      repeatMode: 'daily'
+    }
+  }
+
+  setupNotification(trigger, newData)
+}
+
+export const setTomorrowNotification = async () => {
+  const data = JSON.parse(await AsyncStorage.getItem(NOTIFICATION_KEY))
+  const today = new Date()
+
+  if (data.repeatMode === 'daily' && today.getHours() < 9) {
+    const notificationDate = new Date()
+    notificationDate.setDate(notificationDate.getDate() + 1)
+    notificationDate.setHours(9)
+    notificationDate.setMinutes(0)
+    notificationDate.setSeconds(0)
+
+    const trigger = {
+      date: notificationDate
+    }
+  
+    const newData = {
+      repeatMode: 'tomorrow',
+      repeatAt: notificationDate,
+      trigger
+    }
+  
+    setupNotification(trigger, newData)
   }
 }
