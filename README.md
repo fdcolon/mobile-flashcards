@@ -32,6 +32,10 @@ To run the **Mobile Flashcards** app, just type the following into your terminal
 > expo start
 ```
 
+This will start a browser with expo running. Click on the `Tunnel` button on the **Connection** section and hit the **Production Mode** switch. Then, just scan the QR code from your device to see the app running.
+
+<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/expo-page.png" width="300">
+
 ### Welcome
 
 Once the app is running, the first view you will see is a **Welcome** screen where you will be requested to define how would you like to start the mobile app: With empty data or with preset data.
@@ -243,7 +247,7 @@ However, if the user already solve a quiz before 9:00 am, then the notification 
 ## Notes
 
 - Deleting Decks was not required in the Rubric.
-- Loading modals were not required in the Rubric.
+- Loading/Processing modals were not required in the Rubric.
 - Added api method `resetData` for testing purposes such as verify the `Welcome` screen was working as expected.
 - Added api method `updateDeckTitle` because it was planned to add that behavior but I wasn't able to find a place where to put an option to do that action into the `Deck Details` screen. However, my plan is to add that behavior later.
 
