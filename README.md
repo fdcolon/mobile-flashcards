@@ -250,6 +250,7 @@ However, if the user already solve a quiz before 9:00 am, then the notification 
 
 ## Notes
 
+- The project was tested on `Android` device because my personal computer has Windows and I was not able to create a virtual machine for Mac. However, it is planned to work on both devices: `Android` and `iOS`.
 - Deleting Decks was not required in the Rubric.
 - Loading/Processing modals were not required in the Rubric.
 - Added api method `resetData` for testing purposes such as verify the `Welcome` screen was working as expected.
