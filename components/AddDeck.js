@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 
+import { camelCase as _camelCase } from 'lodash'
+
 import WaitingModal from './helpers/WaitingModal'
 
 import { handlePostDeck } from '../redux/actions'
@@ -15,15 +17,20 @@ class AddDeck extends Component {
   }
 
   componentDidUpdate () {
-    const { loading } = this.props
-    const { showModal } = this.state
+    const { loading, navigation } = this.props
+    const { showModal, title } = this.state
+    const deckId = _camelCase(title)
 
     if (!loading && showModal) {
       this.setState({
         showModal: false,
         title: ''
       })
-      this.goBack()
+
+      navigation.navigate(
+        'Deck Details',
+        { id: deckId, title: title }
+      )
     }
   }
 

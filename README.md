@@ -84,9 +84,9 @@ Once you done with the title, just tap on the `Create Deck` button to save it. T
 
 **Figure 6** - Processing New Deck data
 
-Once the data has been processed, you will be redirected to the `Decks` tab where you will see your new created deck.
+Once the data has been processed, you will be redirected to the `Deck Details` where you will see your new created deck.
 
-<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-deck-04.png" width="300">
+<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/deck-details-01.png" width="300">
 
 **Figure 7** - New Deck added
 
@@ -94,9 +94,13 @@ Once the data has been processed, you will be redirected to the `Decks` tab wher
 
 If you would like to see the details of a deck, just click on the card of the desired deck and you will be redirected to the details screen. For example, let's select the new created deck.
 
+<img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-deck-04.png" width="300">
+
+**Figure 8** - Decks Screen
+
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/deck-details-01.png" width="300">
 
-**Figure 8** - Deck details
+**Figure 9** - Deck details
 
 To go back to the `Decks` screen, just tap on the back button located at the top-left of the screen.
 
@@ -106,7 +110,7 @@ Each deck should have a set of cards in order to start a quiz. To add a new card
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-01.png" width="300">
 
-**Figure 9** - Add Card form
+**Figure 10** - Add Card form
 
 > :warning: The `Submit` button will be enabled ONLY when you type a `question` and it's `answer`.
 
@@ -114,25 +118,25 @@ Type a question and an answer and specify if that sentence is `Correct` or `Inco
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-02.png" width="300">
 
-**Figure 10** - Filling the Add Card form
+**Figure 11** - Filling the Add Card form
 
 Once you have done with your new card data, tap on the `Submit` button to add your new card into the deck. This will display a modal to let you know the data is being processed.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-03.png" width="300">
 
-**Figure 11** - Processing New Card data
+**Figure 12** - Processing New Card data
 
 Once the data has been processed, you will be redirected to the `Deck Details` screen where you will see that your deck now has `1 Card`.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-04.png" width="300">
 
-**Figure 12** - New Card added
+**Figure 13** - New Card added
 
 As many cards as you add, they will be reflected into the `Deck Details` screen.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-05.png" width="300">
 
-**Figure 13** - Deck Details with total cards
+**Figure 14** - Deck Details with total cards
 
 ### Starting a Quiz
 
@@ -140,19 +144,19 @@ Once you added cards to a deck, you are ready to start a quiz by tapping on the 
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/start-quiz-02.png" width="300">
 
-**Figure 14** - Starting a Quiz
+**Figure 15** - Starting a Quiz
 
 > :rotating_light: If you tap on the `Start Quiz >` button with NO CARDS added to the deck, you will get the following screen:
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/start-quiz-01.png" width="300">
 
-**Figure 15** - Starting a Quiz with empty cards
+**Figure 16** - Starting a Quiz with empty cards
 
 On the `Quiz` screen you will notice that there is the indicator of the card number you are solving, the question, a `View answer` label and two buttons to set your answer: `Correct`and `Incorrect`. In order to define your answer, read carefully the question and then tap on the `View Answer` label in order to flip the card and view the corresponding answer.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/start-quiz-03.png" width="300">
 
-**Figure 16** - Flipping quiz card
+**Figure 17** - Flipping quiz card
 
 > :warning: To view again the question, just tap on the `View Question` label to flip back the card.
 
@@ -160,25 +164,25 @@ Once you are ready to set your answer, just tap on the corresponding button to m
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/start-quiz-04.png" width="300">
 
-**Figure 17** - Processing Quiz Card answer
+**Figure 18** - Processing Quiz Card answer
 
 When you solve the last quiz card, you will be redirected to the `Results` screen where you will see the total hits and your score followed by a motivational quote.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/view-results-01.png" width="300">
 
-**Figure 18** - View results - Score 100%
+**Figure 19** - View results - Score 100%
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/view-results-02.png" width="300">
 
-**Figure 19** - View results - Score between 80% and 99%
+**Figure 20** - View results - Score between 80% and 99%
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/view-results-03.png" width="300">
 
-**Figure 20** - View results - Score between 60% and 79%
+**Figure 21** - View results - Score between 60% and 79%
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/view-results-04.png" width="300">
 
-**Figure 21** - View results - Score lower than 60%
+**Figure 22** - View results - Score lower than 60%
 
 Also, you have two options (buttons) at the bottom to continue using the app:
   * `Restart Quiz`, will reset the quiz and start it again from question 1.
@@ -190,23 +194,23 @@ In case you would like to add a new card to a deck that previously has been solv
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-06.png" width="300">
 
-**Figure 22** - Reset Quiz confirm
+**Figure 23** - Reset Quiz confirm
 
 If you decide to proceed, the quiz will be reset and you will be redirect to the `Add Card` screen.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-07.png" width="300">
 
-**Figure 23** - Resetting Quiz
+**Figure 24** - Resetting Quiz
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-08.png" width="300">
 
-**Figure 24** - Add Card after reset quiz
+**Figure 25** - Add Card after reset quiz
 
 If you tap on the `Start Quiz >` button, you will see the new card added by checking the total cards to solve.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-card-09.png" width="300">
 
-**Figure 25** - Start Quiz with new card added
+**Figure 26** - Start Quiz with new card added
 
 ### Deleting Decks
 
@@ -214,32 +218,32 @@ In case you would like to remove a deck, first go to the `Decks` view and select
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/delete-deck-01.png" width="300">
 
-**Figure 26** - Select deck to delete
+**Figure 27** - Select deck to delete
 
 On the `Deck Details^` screen, look for the `Delete` option located at the top-right of the screen and tap on it. This will display a confirmation modal asking you if do you really want to proceed with this action.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/delete-deck-02.png" width="300">
 
-**Figure 27** - Delete Deck confirmation
+**Figure 28** - Delete Deck confirmation
 
 If you proceed, then it will be displayed a modal letting you know the deck is being deleted.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/delete-deck-02.png" width="300">
 
-**Figure 28** - Deleting Deck
+**Figure 29** - Deleting Deck
 
 Finally, once the deck is deleted, you will be redirected to the `Decks` screen noticing the dec has been removed from the list.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/add-deck-04.png" width="300">
 
-**Figure 29** - Updated Decks screen
+**Figure 30** - Updated Decks screen
 
 ### Notifications
 This mobile app is configured to send a notification to the user daily at 9:00 am if the user hasn't solve any quiz today.
 
 <img src="https://github.com/fdcolon/mobile-flashcards/blob/main/images/notification-01.png" width="300">
 
-**Figure 30** - Notifications
+**Figure 31** - Notifications
 
 However, if the user already solve a quiz before 9:00 am, then the notification will be cancelled and scheduled for the next day.
 
